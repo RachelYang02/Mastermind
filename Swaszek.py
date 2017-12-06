@@ -1,5 +1,5 @@
 """ 
-Implementation of Knuth's algorithm
+Implementation of Swaszek's algorithm
 for a game of Mastermind
 with 4 positions and 6 colors.
 
@@ -11,6 +11,7 @@ Authors: Brenna Manning, Emma Price, and Rachel Yang
 """
 
 import copy
+import random
 
 def all_possible_codes():
 	""" Calculates and returns list of 
@@ -67,28 +68,18 @@ def find_candidates(prev_candidates, curr_code, resp):
 			new_candidates.append(candidate)
 	return new_candidates
 
-def play_turn(candidates):
-	""" Finds best worst case and 
-		returns next move based on that information. """
-	all_possible_responses = [(0,0), (0,1), (0,2), (0,3), (0,4), (1,0), (1,1), (1,2), (1,3), (2,0), (2,1), (2,2), (3,0), (4,0)]
-	possible_sizes = []
-	if len(candidates) == 0:
-		print "no candidates"
+def play_turn(candidates, game_mode):
+	""" Two game modes: random (r) or counting (c).
+		If random, choose random candidate to play as move.
+		If counting, choose first candidate in candidate space to play as move. 
+		Returns next move using above. """
+
+	if game_mode == "r":
+		return candidates[random.randrange(0,len(candidates))]
+	elif game_mode == 'c':
+		return candidates[0]
 	else:
-		for candidate in candidates:
-			max_cs_size = 0
-			for resp in all_possible_responses:
-				# find worst case, max of responses
-				cs_size = len(find_candidates(candidates, candidate, resp))
-				if cs_size > max_cs_size:
-					max_cs_size = cs_size
-				if max_cs_size == 0:
-					max_cs_size = 1296
-			possible_sizes.append(max_cs_size)
-		# find index of best case, min of max candidate responses
-		mini = possible_sizes.index(min(possible_sizes))
-		# return candidates of that index
-		return candidates[mini]
+		print "ERROR: not a game mode"
 
 def get_response(code, master_code):
 	""" Gets codemaker's response to guessed 
@@ -117,7 +108,7 @@ def get_response(code, master_code):
 
 	return (black_pegs, white_pegs)
 
-def play_game(master_code):
+def play_game(master_code, game_mode):
 	""" Plays Mastermind. """
 	candidates = all_possible_codes()
 	num_turns = 0
@@ -126,12 +117,9 @@ def play_game(master_code):
 	while resp != (4,0) and (len(candidates) > 0):
 		resp = get_response(move, master_code)
 		candidates = find_candidates(candidates, move, resp)
-		move = play_turn(candidates)
+		move = play_turn(candidates, game_mode)
 		num_turns += 1
 		print "move: " + str(move) + ". resp: " + str(resp)
 	print "The game is over! The code is " + str(move) + ".The computer solved it in " + str(num_turns) + " turns."
 
-play_game([1,2,3,4])
-
-
-
+play_game([1,1,1,1], 'r')
