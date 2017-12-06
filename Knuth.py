@@ -16,7 +16,7 @@ def all_possible_codes():
 	""" Calculates and returns list of 
 		all possible codes that codemaker 
 		could choose. List should have 1296
-		(6^4) codes. """ 
+		(4^6) codes. """ 
 	all_codes = []
 
 	# iterate through 6 colors for 4 positions
