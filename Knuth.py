@@ -131,7 +131,12 @@ def play_game(master_code):
 		print "move: " + str(move) + ". resp: " + str(resp)
 	print "The game is over! The code is " + str(move) + ".The computer solved it in " + str(num_turns) + " turns."
 
-play_game([1,2,3,4])
+# Run game using user input
+master_code = raw_input("Welcome to Mastermind: Knuth Edition! Let's play. \n \
+Choose a master code (4 numbers from 0-5, ex: 1,2,3,4): ")
+master_code = [int(s) for s in master_code.split(',')]
+
+play_game(master_code)
 
 
 

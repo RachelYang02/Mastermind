@@ -122,4 +122,17 @@ def play_game(master_code, game_mode):
 		print "move: " + str(move) + ". resp: " + str(resp)
 	print "The game is over! The code is " + str(move) + ".The computer solved it in " + str(num_turns) + " turns."
 
-play_game([1,1,1,1], 'r')
+# Run game using user input
+master_code = raw_input("Welcome to Mastermind: Swaszek Edition! Let's play. \n \
+Choose a master code (4 numbers from 0-5, ex: 1,2,3,4): ")
+master_code = [int(s) for s in master_code.split(',')]
+
+game_mode = raw_input("Choose a game mode (random or counting): ")
+if game_mode == "random":
+	game_mode = "r"
+elif game_mode == "counting":
+	game_mode == "c"
+else:
+	"Sorry, couldn't find that game mode."
+
+play_game(master_code, game_mode)
